@@ -1,6 +1,6 @@
 <?
 class vars{
-	private static $vars = array(
+	private $vars = array(
 		'mysqlLogin' => 'script',
 		'mysqlPass'  => 'JTpjuhL9wfQ8YasT',		
 		'mysqlDB'    => 'ontology',		

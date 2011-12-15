@@ -9,4 +9,8 @@ class useLib
            // throw new Exception('Драйвер не найден');
         }
     }
+    
+    public static function inclLib($name){
+    	include_once '/var/www/neo4j/lib/' . $name . '.php';
+    }
 }
