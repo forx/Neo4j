@@ -9,36 +9,45 @@ class mySqlBuddy{
     	mysql_select_db($vars->get('mysqlDB'), $this->link);
     }
 
-	public function test(){
-		print 'test';
-	}
-
-	public function load($id){
+	public function getById($id){
 		$return = array(); //результат в виде массива, котрый мы вытаскиваем из php
-		$query  = "SELECT int.name, int.desc, attr.id, attr.name, relation.name FROM ( (
-										intence as int LEFT JOIN int2int ON int.id = int2int.intId
-									) LEFT JOIN relation ON int2int.relId = relation.id
-								) LEFT JOIN intence as attr ON as attr.id = int2int.attrId
-								WHERE int.id = {$id}";
-
+		
+		$query  = "SELECT name, descr FROM intence WHERE id = {$id}";
 		$result = mysql_query($query, $this->link);
-
-		if (mysql_num_rows($result) != 0){	
-			$row = mysql_fetch_row($result);
-			$return['name']    = $row[0];
-			$return['desc']    = $row[1];
-			$return['arrAttr'] = array( array('id' => $row[2], 'name' => $row[3], 'relation' => $row[4]) );
-				
+		if (mysql_num_rows($result) != 0){
+			$row = mysql_fetch_array($result);
+			$return['id'] = $id;
+			$return['name'] = $row['name'];
+			$return['desc'] = $row['descr'];
+			
+			$query = "SELECT intence.id, intence.name, relation.name FROM ( (
+							int2int LEFT JOIN intence ON intence.id = int2int.attrId 
+							) LEFT JOIN relation ON relation.id = relId 
+						) WHERE intId = {$id}";
+			$result = mysql_query($query, $this->link);
 			while($row = mysql_fetch_row($query)){
-				$return['arrAttr'][] = array('id' => $row[2], 'name' => $row[3], 'relation' => $row[4]);
+				$return['arrAttr'][] = array('id' => $row[0], 'name' => $row[1], 'relation' => $row[2]);
 			}
-		} else{
+			
+			$query = "SELECT intence.id, intence.name, relation.name FROM ( (
+							int2int LEFT JOIN intence ON intence.id = int2int.intId 
+							) LEFT JOIN relation ON relation.id = relId 
+						) WHERE attrId = {$id}";
+			$result = mysql_query($query, $this->link);
+			while($row = mysql_fetch_row($query)){
+				$return['arrAttr4'][] = array('id' => $row[0], 'name' => $row[1], 'relation' => $row[2]);
+			}
+		} else {
 			$return = false;
-		}		
+		}
 		return($return);
 	}
+	
+	public function getByName($name){
+		
+	}
 
-	public function loadName(){
+	public function loadName($id){
 		$return = '';
 		$result = mysql_query("SELECT int.name FROM intence	WHERE int.id = {$id}", $this->link);
 		if (mysql_num_rows($result) != 0){
@@ -51,42 +60,50 @@ class mySqlBuddy{
 	}
 
 	public function save($id, $name, $desc, $arrAttr){
-		$query = "SELECT id, name FROM intence WHERE id = {$id}";
+		$query = "SELECT id, name, descr FROM intence WHERE id = {$id}";
 		$result = mysql_query($query, $this->link);
 		$query = false;
 		if (mysql_num_rows($result) == 0) {
-			$query = "INSERT INTO intence (id, name, desc) VALUES ({$id}, '{$name}', '{$desc}')";
+			$query = "INSERT INTO intence (id, name, descr) VALUES ({$id}, '{$name}', '{$desc}')";
 		} else {
-			$row = mysql_fetch_row($result);
-			if ($row['name'] != $name && $row['desc'] != $desc){
-				$query = "UPDATE intence SET name = '{$name}', desc = '{$desc}' WHERE id = {$id}";
+			$row = mysql_fetch_array($result);
+			if ($row['name'] != $name && $row['descr'] != $desc){
+				$query = "UPDATE intence SET name = '{$name}', descr = '{$desc}' WHERE id = {$id}";
 			} elseif($row['name'] != $name) {
 				$query = "UPDATE intence SET name = '{$name}' WHERE id = {$id}";
-			} elseif($row['desc'] != $desc) {
-				$query = "UPDATE intence SET desc = '{$desc}' WHERE id = {$id}";
+			} elseif($row['descr'] != $desc) {
+				$query = "UPDATE intence SET descr = '{$desc}' WHERE id = {$id}";
 			}
 		}
 		if ($query){
 			mysql_query($query, $this->link);
 		}
 		foreach ($arrAttr as $attr){
-			$query  = "SELECT id FROM relation WHERE name = '{$name}'";
+			$query  = "SELECT id FROM relation WHERE name = '{$attr['relation']}'";
 			$result = mysql_query($query, $this->link);
 			if (mysql_num_rows($result) == 0){
-				$query = "INSERT INTO relation (id, name) VALUES ({$id}, '{$name}')";
+				$query = "INSERT INTO relation (name) VALUES ('{$attr['relation']}')";
 				mysql_query($query, $this->link);
 				$relId = mysql_insert_id($this->link);
 			} else {
-				$row = mysql_fetch_row($result);
+				$row = mysql_fetch_assoc($result);
 				$relId = $row['id'];
 			}
 			$query = "SELECT * FROM int2int WHERE intId = {$id} AND relId = {$relId} AND attrId = {$attr['id']}";
 			$result = mysql_query($query, $this->result);
 			if (mysql_num_rows($result) == 0){
-				$query = "INSERT INTO int2int (intId, relId, attrId) VALUES ({$id}, {$relId}, {$attrId})";
+				$query = "INSERT INTO int2int (intId, relId, attrId) VALUES ({$id}, {$relId}, {$attr['id']})";
 				mysql_query($query);
 			}
 		}
+	}
+			
+	public function deleteWithRelation($id){
+		$query = "DELETE FROM relation WHERE attrId = {$id} OR intId = {$id}";
+		mysql_query($query);
+		
+		$query = "DELETE FROM intence WHERE id = {$id}";
+		mysql_query($query);
 	}
 	
 	public function reserv(){
