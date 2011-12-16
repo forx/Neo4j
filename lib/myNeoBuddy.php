@@ -103,12 +103,12 @@ class myNeoBuddy{
 				
 				foreach($arrAttr as $attr){
 					$uri = $this->base_uri . 'node/' . $id . '/relationships';
-					$data = json_encode(array(
+					$data = array(
 						'to' => $this->base_uri . 'node/' . $attr['id'],
 						'type' => $attr['relation'],
 						'data' => null,
-					));
-					$data = '{"to" : "http://localhost:9999/node/10", "type" : "LOVES", "data" : {"foo" : "bar"}}';
+					);
+					//$data = '{"to" : "http://localhost:9999/node/10", "type" : "LOVES", "data" : {"foo" : "bar"}}';
 					list($response, $http_code) = $this->jsonClient->jsonPostRequest($uri, $data);
 					print_r($response);
 					print "\n" . $http_code . "\n" . $uri . "\n" . $data;

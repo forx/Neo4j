@@ -87,11 +87,12 @@ class Relationship extends PropertyContainer
 			$payload = array(
 				'to' => $this->getEndNode()->getUri(),
 				'type' => $this->_type,
-				'data'=>$data
+				'data'=> null
 			);
 			
 			list($response, $http_code) = $this->jsonClient->jsonPostRequest($this->getUri(), $payload);
-			
+			print "\n" . $http_code . "\n" . $this->getUri() . "\n" . $payload;
+			print_r($payload);
 			if ($http_code!=201) throw new NeoRestHttpException($http_code);
 		} else {
 			list($response, $http_code) = $this->jsonClient->jsonPutRequest($this->getUri().'/properties', $data);
