@@ -1,0 +1,32 @@
+Start test for Sql at 2011-12-17 16:35:23
+Created 50 nodes:	2.4615271091461
+Created 100 nodes:	4.8878180980682
+Created 150 nodes:	7.2372660636902
+Created 200 nodes:	9.561753988266
+Created 250 nodes:	11.88632106781
+Created 300 nodes:	14.21075797081
+Created 350 nodes:	16.592105150223
+Created 400 nodes:	18.941565990448
+Created 450 nodes:	21.333318948746
+Created 500 nodes:	23.641096115112
+Readed and added relations for 50 nodes:	30.837718009949
+Readed and added relations for 100 nodes:	123.65310883522
+Readed and added relations for 150 nodes:	274.50380897522
+Readed and added relations for 200 nodes:	484.54966783524
+Readed and added relations for 250 nodes:	755.92201185226
+Readed and added relations for 300 nodes:	1091.3305039406
+Readed and added relations for 350 nodes:	1481.092717886
+Readed and added relations for 400 nodes:	1934.802271843
+Readed and added relations for 450 nodes:	2449.5847229958
+Readed and added relations for 500 nodes:	3021.0969920158
+Readed with relations 50 nodes:	2.6274740695953
+Readed with relations 100 nodes:	5.2581851482391
+Readed with relations 150 nodes:	7.8790919780731
+Readed with relations 200 nodes:	10.485939979553
+Readed with relations 250 nodes:	13.107096195221
+Readed with relations 300 nodes:	15.715872049332
+Readed with relations 350 nodes:	18.310161113739
+Readed with relations 400 nodes:	20.925423145294
+Readed with relations 450 nodes:	23.520064115524
+Readed with relations 500 nodes:	26.133898019791
+End test at 2011-12-17 17:26:34

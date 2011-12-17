@@ -32,14 +32,13 @@ class myNeoBuddy{
 		
 		$uri = $this->base_uri . 'node/' . $id;
 		list($response, $http_code) = $this->jsonClient->jsonGetRequest($uri);
-
 		switch ($http_code){
 			case 200:
 				$result['id'] = end(explode("/", $response['self']));
 				$result['name'] = $response['data']['name'];
 				$result['desc'] = $response['data']['desc'];
 				 
-				list($data, $http_code) = $this->jsonClient->jsonGetRequest($response['incoming relationships']);
+				list($data, $http_code) = $this->jsonClient->jsonGetRequest($response['outgoing relationships']);
 				if ($http_code == 200){
 					$result['arrAttr'] = array();
 					foreach($data as $rel){
@@ -51,12 +50,12 @@ class myNeoBuddy{
 					}
 				}
 				
-				list($data, $http_code) = $this->jsonClient->jsonGetRequest($response['outgoing relationships']);
+				list($data, $http_code) = $this->jsonClient->jsonGetRequest($response['incoming relationships']);
 				if ($http_code == 200){
 					$result['arrAttr4'] = array();
 					foreach($data as $rel){
 						$relId  = end(explode('/', $rel['self']));
-						$attrId = end(explode('/', $rel['end']));
+						$attrId = end(explode('/', $rel['start']));
 						list($attrData) = $this->jsonClient->jsonGetRequest($rel['end']);
 						$attrName = $attrData['data']['name'];
 						$result['arrAttr4'][] = array('id' => $attrId, 'name' => $attrName, 'type' => $rel['type']);
@@ -110,8 +109,8 @@ class myNeoBuddy{
 					);
 					//$data = '{"to" : "http://localhost:9999/node/10", "type" : "LOVES", "data" : {"foo" : "bar"}}';
 					list($response, $http_code) = $this->jsonClient->jsonPostRequest($uri, $data);
-					print_r($response);
-					print "\n" . $http_code . "\n" . $uri . "\n" . $data;
+					//print_r($response);
+					//print "\n" . $http_code . "\n" . $uri . "\n" . $data;
 				}
 			break;
 			default:
@@ -146,7 +145,7 @@ class myNeoBuddy{
 			default:
 				$return = false;
 		}
-		print $uri;
+		//print $uri;
 		return $return;
 	}
 }

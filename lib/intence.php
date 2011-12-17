@@ -61,6 +61,7 @@ class intence {
 			$this->myBuddy = useLib::loadLib('my' . $this->where . 'Buddy');
 			$this->id      = $this->myBuddy->reserv();
 		} else {
+			$this->myBuddy = useLib::loadLib('my' . $this->where . 'Buddy');
 			$this->id = $id;
 		}
 		

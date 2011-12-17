@@ -1,0 +1,32 @@
+Start test for Neo at 2011-12-17 15:33:13
+Created 50 nodes:	4.6438510417938
+Created 100 nodes:	9.0779700279236
+Created 150 nodes:	13.612267971039
+Created 200 nodes:	17.962779998779
+Created 250 nodes:	22.521366119385
+Created 300 nodes:	26.596728086472
+Created 350 nodes:	31.297024011612
+Created 400 nodes:	35.430839061737
+Created 450 nodes:	39.748229980469
+Created 500 nodes:	44.290038108826
+Readed and added relations for 50 nodes:	41.569889068604
+Readed and added relations for 100 nodes:	157.60340499878
+Readed and added relations for 150 nodes:	344.05258989334
+Readed and added relations for 200 nodes:	602.92788386345
+Readed and added relations for 250 nodes:	934.96565389633
+Readed and added relations for 300 nodes:	1336.8210349083
+Readed and added relations for 350 nodes:	1814.410722971
+Readed and added relations for 400 nodes:	2362.3728890419
+Readed and added relations for 450 nodes:	2982.224793911
+Readed and added relations for 500 nodes:	3669.5836510658
+Readed with relations 50 nodes:	12.785140991211
+Readed with relations 100 nodes:	13.152148962021
+Readed with relations 150 nodes:	13.522093057632
+Readed with relations 200 nodes:	13.88933300972
+Readed with relations 250 nodes:	14.256468057632
+Readed with relations 300 nodes:	14.631077051163
+Readed with relations 350 nodes:	14.998026132584
+Readed with relations 400 nodes:	15.366318941116
+Readed with relations 450 nodes:	15.734785079956
+Readed with relations 500 nodes:	16.102488040924
+End test at 2011-12-17 16:35:23
